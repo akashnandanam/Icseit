@@ -45,15 +45,19 @@ def generate_response(user_input):
     else:
         return "I'm still learning! Try asking about solving, roots, or the discriminant of quadratic equations."
 
+# Input box
+user_input = st.text_input("Ask ICSEit anything about Quadratic Equations...")
+
+# Generate and display response
+if user_input:
+    st.session_state.chat_history.append((user_input, "user"))
+    response = generate_response(user_input)
+    st.session_state.chat_history.append((response, "bot"))
+
+# Display chat
 st.markdown("<div class='chat-box'>", unsafe_allow_html=True)
 for msg, sender in st.session_state.chat_history:
     cls = "user" if sender == "user" else "bot"
     st.markdown(f"<div class='chat-message {cls}'>{msg}</div>", unsafe_allow_html=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
-user_input = st.text_input("Ask ICSEit anything about Quadratic Equations...", key="user_input")
-if user_input:
-    st.session_state.chat_history.append((user_input, "user"))
-    response = generate_response(user_input)
-    st.session_state.chat_history.append((response, "bot"))
-    st.experimental_rerun()
